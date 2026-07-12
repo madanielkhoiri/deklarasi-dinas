@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "lucide-react": "^1.16.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  }
+}
