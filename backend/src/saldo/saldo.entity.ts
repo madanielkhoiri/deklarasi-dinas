@@ -107,10 +107,10 @@ export class Saldo {
   @Column({ type: 'text', nullable: true })
   alasan_bukti_pengembalian_ditolak!: string | null;
 
-  @Column({ type: 'datetime', nullable: true })
+  @Column({ type: 'timestamp', nullable: true })
   tanggal_upload_bukti_pengembalian!: Date | null;
 
-  @Column({ type: 'datetime', nullable: true })
+  @Column({ type: 'timestamp', nullable: true })
   tanggal_verifikasi_pengembalian!: Date | null;
 
   @CreateDateColumn()
