@@ -86,7 +86,7 @@ export class PengajuanService {
     const pengajuan = this.pengajuanRepository.create({
       id_pengguna: pengguna.id,
 
-      nrp: data.nrp && data.nrp.trim() ? data.nrp.trim() : pengguna.nrp,
+      nrp: data.nrp && data.nrp.trim() ? data.nrp.trim() : (pengguna.nrp || ''),
 
       nama_pengguna:
         data.nama_pengguna && data.nama_pengguna.trim()

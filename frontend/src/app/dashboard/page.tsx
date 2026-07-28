@@ -247,13 +247,12 @@ function jumlahNotaBelumOcrAsli(daftarSaldo: any[], daftarNotaPerDeklarasi: Reco
 
 
 function teksAmanSettlement(nilai: unknown) {
- return String(nilai ?? "")
- .replace(/ "")
- .replace(//g, "")
- .replace(/ "")
- .replace(//g, "")
- .replace(/\s+/g, " ")
- .trim();
+  return String(nilai ?? "")
+    .replace(/"/g, "")
+    .replace(/'/g, "")
+    .replace(/\n/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function statusNotaRevisiFinal(nota: DataNota | any) {
