@@ -33,15 +33,17 @@ export class AuthService {
     };
   }
 
-  async login(nrp: string, kata_sandi: string) {
+  async login(identifier: string, kata_sandi: string) {
     const pengguna = await this.penggunaRepository.findOne({
-      where: {
-        nrp,
-      },
+      where: [
+        { nrp: identifier },
+        { username: identifier },
+        { email: identifier }
+      ],
     });
 
     if (!pengguna) {
-      throw new UnauthorizedException('NRP atau kata sandi salah');
+      throw new UnauthorizedException('Username / NRP / Email atau kata sandi salah');
     }
 
     if (!pengguna.aktif) {
@@ -54,7 +56,7 @@ export class AuthService {
     );
 
     if (!kataSandiBenar) {
-      throw new UnauthorizedException('NRP atau kata sandi salah');
+      throw new UnauthorizedException('Username / NRP / Email atau kata sandi salah');
     }
 
     const payload = {

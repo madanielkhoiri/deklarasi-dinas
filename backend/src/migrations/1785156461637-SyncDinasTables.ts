@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class InitDatabase1783998587227 implements MigrationInterface {
-    name = 'InitDatabase1783998587227'
+export class SyncDinasTables1785156461637 implements MigrationInterface {
+    name = 'SyncDinasTables1785156461637'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE TYPE "public"."database_settlement_status_data_enum" AS ENUM('AKTIF', 'DIBATALKAN')`);
@@ -16,8 +16,6 @@ export class InitDatabase1783998587227 implements MigrationInterface {
         await queryRunner.query(`CREATE TYPE "public"."pengajuan_jenis_pengajuan_enum" AS ENUM('PERJALANAN_DINAS', 'UANG_OPERASIONAL')`);
         await queryRunner.query(`CREATE TYPE "public"."pengajuan_status_pengajuan_enum" AS ENUM('DIAJUKAN', 'DISETUJUI', 'DITOLAK', 'MENUNGGU_TRANSFER', 'SELESAI')`);
         await queryRunner.query(`CREATE TABLE "pengajuan" ("id" SERIAL NOT NULL, "id_pengguna" integer NOT NULL, "nrp" character varying(50) NOT NULL, "nama_pengguna" character varying(150) NOT NULL, "jenis_pengajuan" "public"."pengajuan_jenis_pengajuan_enum" NOT NULL DEFAULT 'PERJALANAN_DINAS', "lokasi" character varying(120), "keterangan" text, "nomor_std" character varying(120), "nomor_rab" character varying(120), "nama_file_std" character varying(255), "path_file_std" character varying(255), "nama_file_rab" character varying(255) NOT NULL, "path_file_rab" character varying(255) NOT NULL, "nominal_transfer" numeric(15,2) NOT NULL DEFAULT '0', "nama_file_bukti_transfer" character varying(255), "path_file_bukti_transfer" character varying(255), "tanggal_transfer" date, "id_saldo" integer, "status_pengajuan" "public"."pengajuan_status_pengajuan_enum" NOT NULL DEFAULT 'DIAJUKAN', "catatan_admin" text, "tanggal_pengajuan" date NOT NULL, "dibuat_pada" TIMESTAMP NOT NULL DEFAULT now(), "diperbarui_pada" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_d4bf579d67a089bcc11bf263e21" PRIMARY KEY ("id"))`);
-        await queryRunner.query(`CREATE TYPE "public"."pengguna_role_enum" AS ENUM('SUPER_ADMIN', 'FA', 'KARYAWAN')`);
-        await queryRunner.query(`CREATE TABLE "pengguna" ("id" SERIAL NOT NULL, "nrp" character varying(50) NOT NULL, "nama" character varying(150) NOT NULL, "email" character varying(150), "nomor_telepon" character varying(30), "kata_sandi" character varying(255) NOT NULL, "role" "public"."pengguna_role_enum" NOT NULL DEFAULT 'KARYAWAN', "aktif" boolean NOT NULL DEFAULT true, "kode_tiket" character varying(80), "dibuat_pada" TIMESTAMP NOT NULL DEFAULT now(), "diperbarui_pada" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "UQ_fcbda34a80de1d93d33b00bfca0" UNIQUE ("nrp"), CONSTRAINT "UQ_e2c44474b171bd878e3d8ec22b1" UNIQUE ("email"), CONSTRAINT "PK_ca7a763029c477efd74c6ec7312" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TYPE "public"."saldo_jenis_saldo_enum" AS ENUM('PERJALANAN_DINAS', 'UANG_OPERASIONAL')`);
         await queryRunner.query(`CREATE TYPE "public"."saldo_status_saldo_enum" AS ENUM('AKTIF', 'PAS', 'ADA_SISA', 'MELEBIHI_NOMINAL', 'MENUNGGU_PENGEMBALIAN', 'SELESAI')`);
         await queryRunner.query(`CREATE TYPE "public"."saldo_status_bukti_pengembalian_enum" AS ENUM('BELUM_UPLOAD', 'DIAJUKAN', 'DISETUJUI', 'DITOLAK')`);
@@ -29,8 +27,6 @@ export class InitDatabase1783998587227 implements MigrationInterface {
         await queryRunner.query(`DROP TYPE "public"."saldo_status_bukti_pengembalian_enum"`);
         await queryRunner.query(`DROP TYPE "public"."saldo_status_saldo_enum"`);
         await queryRunner.query(`DROP TYPE "public"."saldo_jenis_saldo_enum"`);
-        await queryRunner.query(`DROP TABLE "pengguna"`);
-        await queryRunner.query(`DROP TYPE "public"."pengguna_role_enum"`);
         await queryRunner.query(`DROP TABLE "pengajuan"`);
         await queryRunner.query(`DROP TYPE "public"."pengajuan_status_pengajuan_enum"`);
         await queryRunner.query(`DROP TYPE "public"."pengajuan_jenis_pengajuan_enum"`);

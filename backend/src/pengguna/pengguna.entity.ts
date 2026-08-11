@@ -7,24 +7,27 @@ import {
 } from 'typeorm';
 
 // <--- fitur entity pengguna / akun aplikasi --->
-@Entity('pengguna')
+@Entity('users', { synchronize: false })
 export class Pengguna {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ type: 'varchar', length: 50, unique: true })
-  nrp!: string;
+  @Column({ type: 'varchar', length: 50, unique: true, nullable: true })
+  nrp!: string | null;
 
-  @Column({ type: 'varchar', length: 150 })
+  @Column({ type: 'varchar', length: 150, unique: true, nullable: true })
+  username!: string | null;
+
+  @Column({ name: 'name', type: 'varchar', length: 150 })
   nama!: string;
 
   @Column({ type: 'varchar', length: 150, unique: true, nullable: true })
   email!: string | null;
 
-  @Column({ type: 'varchar', length: 30, nullable: true })
+  @Column({ name: 'phone_number', type: 'varchar', length: 30, nullable: true })
   nomor_telepon!: string | null;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ name: 'password_hash', type: 'varchar', length: 255 })
   kata_sandi!: string;
 
   @Column({
@@ -34,16 +37,16 @@ export class Pengguna {
   })
   role!: 'SUPER_ADMIN' | 'FA' | 'KARYAWAN';
 
-  @Column({ type: 'boolean', default: true })
+  @Column({ name: 'is_active', type: 'boolean', default: true })
   aktif!: boolean;
 
-  @Column({ type: 'varchar', length: 80, nullable: true })
+  @Column({ name: 'kode_tiket', type: 'varchar', length: 80, nullable: true })
   kode_tiket!: string | null;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'created_at' })
   dibuat_pada!: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ name: 'updated_at' })
   diperbarui_pada!: Date;
 }
 // <--- end --->
